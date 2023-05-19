@@ -1,0 +1,29 @@
+---
+const res = await fetch("https://cms.dvdsikirevci.hr/api/posts");
+const posts = await res.json();
+
+import DefaultLayout from '../layouts/DefaultLayout.astro'
+import Post from '../components/Post.astro'
+---
+
+<DefaultLayout title='Početna'>
+	<h2>Najnovije</h2>
+    <ul>
+        {
+          posts.docs.slice(0,4).map((post) =>(
+            <Post title={post.title} content={post.content} image={post.image.sizes.thumbnail.url} attachment={post.attachment}></Post>
+          ))
+        }
+      </ul>
+	  <h2>O nama</h2>
+	  <p>Dobrovoljne vatrogasne udruge u ovom dijelu Hrvatske imaju dugu i bogatu tradiciju, a nastale su na temeljima dragovoljnosti, humanosti i solidarnosti. Osim pomoći pri spašavanju ljudi i imovine u slučaju požara ili elementarnih nepogoda bile su nositelji kulturno-zabavnog života u selu. Dobrovoljno vatrogasno društvo Sikirevci osnovano je 8. rujna. 1928. godine na prijedlog gospodina Ljubomira Pleše tadašnjeg Sikirevačkog učitelja koji je tog dana sakupio mještane i održao Osnivačku skupštinu Dobrovoljnog vatrogasnog društva Sikirevci... </p>
+
+</DefaultLayout>
+
+<style>
+    ul {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+</style>

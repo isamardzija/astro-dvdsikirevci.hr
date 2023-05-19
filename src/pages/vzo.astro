@@ -1,0 +1,27 @@
+---
+const res = await fetch("https://cms.dvdsikirevci.hr/api/posts?where[type][equals]=VZO");
+const posts = await res.json();
+const title = 'Vatrogasna zajednica općine'
+
+import DefaultLayout from '../layouts/DefaultLayout.astro'
+import Post from '../components/Post.astro'
+---
+<DefaultLayout title={title}>
+    <h1>{title}</h1>
+    <ul>
+        {
+          posts.docs.map((post) =>(
+            <Post title={post.title} content={post.content} image={post.image.sizes.thumbnail.url} attachment={post.attachment}></Post>
+          ))
+        }
+      </ul>
+
+</DefaultLayout>
+
+<style>
+    ul {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+</style>
